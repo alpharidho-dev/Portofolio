@@ -1,16 +1,26 @@
 'use client';
 
-export default function SpotifyEmbed() {
+interface Props {
+  src?: string;
+  height?: number;
+  title?: string;
+}
+
+export default function SpotifyEmbed({ 
+  src = "https://open.spotify.com/embed/playlist/37i9dQZF1DX4CB6zI8FWXS", // default The 1975
+  height = 380,
+  title = "🎧 Listen on Spotify" 
+}: Props) {
   return (
     <section className="mt-12">
       <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
-        🎧 Music I'm Into
+        {title}
       </h3>
       <div className="relative overflow-hidden rounded-xl">
         <iframe
-          src="https://open.spotify.com/embed/artist/3mIj9lX2MWuHmhNCA7LSCW?utm_source=generator"
+          src={src}
           width="100%"
-          height="352"
+          height={height}
           frameBorder="0"
           allowFullScreen
           allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
@@ -19,9 +29,6 @@ export default function SpotifyEmbed() {
           style={{ borderRadius: '12px' }}
         />
       </div>
-      <p className="text-sm text-gray-500 dark:text-gray-400 mt-2 text-center">
-        Currently listening to The 1975
-      </p>
     </section>
   );
 }
