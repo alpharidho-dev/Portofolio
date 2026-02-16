@@ -9,9 +9,9 @@ const skillCategories = [
     icon: Monitor,
     color: '#6366f1',
     skills: [
-      'HTML5', 'CSS3', 'JavaScript',
-      'TypeScript (belajar)', 'React',
-      'Next.js', 'Tailwind CSS',
+      'HTML', 'CSS (belajar)', 'JavaScript (belajar)',
+      'TypeScript (belajar)', 'React (dasar)',
+      'Next.js (dasar)', 'Tailwind CSS (dasar)',
     ],
   },
   {
@@ -19,7 +19,7 @@ const skillCategories = [
     icon: Palette,
     color: '#8b5cf6',
     skills: [
-      'Figma (belajar)', 'Responsive Design',
+      'Figma', 'Responsive Design (belajar)',
       'UI/UX dasar',
     ],
   },
@@ -29,7 +29,7 @@ const skillCategories = [
     color: '#06b6d4',
     skills: [
       'Python (dasar)', 'Golang (dasar)',
-      'PostgreSQL (dasar)', 'Laragon',
+      'PostgreSQL (dasar)',
     ],
   },
   {
@@ -37,7 +37,7 @@ const skillCategories = [
     icon: Wrench,
     color: '#22c55e',
     skills: [
-      'Git', 'GitHub', 'VS Code', 'Vercel',
+      'Git', 'GitHub', 'VS Code', 'AntiGravity', 'Vercel',
     ],
   },
 ];

@@ -64,7 +64,7 @@ export default function Hero() {
         >
           <span className="status-badge">
             <span className="dot" />
-            Sedang belajar & membangun
+            Sedang belajar untuk jadi IMPHNEN Sukses
           </span>
         </motion.div>
 

@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { BookOpen, Code2, Coffee } from 'lucide-react';
 import CodingStats from './CodingStats';
+import { techStack } from './Tracker'; // <-- import dari Tracker (satu folder)
 
 export default function Bio() {
   return (
@@ -60,7 +61,7 @@ export default function Bio() {
         >
           <Code2 className="mx-auto mb-2" size={22} style={{ color: 'var(--accent-start)' }} />
           <p className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
-            8+
+            {techStack.length}+          {/* <-- angka dinamis */}
           </p>
           <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
             Teknologi Dipelajari
