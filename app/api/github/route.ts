@@ -6,16 +6,18 @@ export async function GET() {
     const username = process.env.GITHUB_USERNAME;
 
     if (!token || !username) {
+      console.error('Missing GITHUB_TOKEN or GITHUB_USERNAME');
       return NextResponse.json(
         { error: 'GitHub token atau username tidak dikonfigurasi' },
         { status: 500 }
       );
     }
 
-    // Fetch data pengguna
+    // Fetch user data
     const userRes = await fetch(`https://api.github.com/users/${username}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
+
     if (!userRes.ok) {
       const errorText = await userRes.text();
       console.error(`GitHub user API error (${userRes.status}):`, errorText);
@@ -24,13 +26,15 @@ export async function GET() {
         { status: userRes.status }
       );
     }
+
     const userData = await userRes.json();
 
-    // Fetch repositori terbaru
+    // Fetch repositories
     const reposRes = await fetch(
       `https://api.github.com/users/${username}/repos?sort=updated&per_page=6`,
       { headers: { Authorization: `Bearer ${token}` } }
     );
+
     if (!reposRes.ok) {
       const errorText = await reposRes.text();
       console.error(`GitHub repos API error (${reposRes.status}):`, errorText);
@@ -39,6 +43,7 @@ export async function GET() {
         { status: reposRes.status }
       );
     }
+
     const reposData = await reposRes.json();
 
     const topRepos = reposData.map((repo: any) => ({
@@ -55,6 +60,7 @@ export async function GET() {
       public_repos: userData.public_repos,
       followers: userData.followers,
       following: userData.following,
+      created_at: userData.created_at,
       top_repos: topRepos,
     });
   } catch (error) {

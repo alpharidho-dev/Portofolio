@@ -2,10 +2,17 @@
 
 import useSWR from 'swr';
 import { motion } from 'framer-motion';
-import { Github, Star, GitFork, ExternalLink } from 'lucide-react';
+import { Github, Star, ExternalLink } from 'lucide-react';
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+// Fetcher yang aman
+const fetcher = async (url: string) => {
+  const res = await fetch(url);
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Gagal memuat data');
+  return data;
+};
 
+// Warna untuk bahasa pemrograman
 const langColors: Record<string, string> = {
   TypeScript: '#3178c6',
   JavaScript: '#f1e05a',
@@ -21,9 +28,11 @@ const langColors: Record<string, string> = {
 };
 
 export default function GitHubStats() {
-  const { data, error } = useSWR('/api/github', fetcher, { refreshInterval: 3600000 });
+  const { data, error } = useSWR('/api/github', fetcher, {
+    refreshInterval: 3600000, // refresh setiap 1 jam
+  });
 
-  if (error)
+  if (error) {
     return (
       <div
         className="mt-12 p-4 rounded-xl text-sm"
@@ -33,11 +42,12 @@ export default function GitHubStats() {
           color: '#ef4444',
         }}
       >
-        ⚠️ Gagal memuat data GitHub
+        ⚠️ Gagal memuat data GitHub: {error.message}
       </div>
     );
+  }
 
-  if (!data)
+  if (!data) {
     return (
       <div className="mt-12 glass-card animate-pulse" style={{ cursor: 'default' }}>
         <div className="h-5 w-32 rounded" style={{ background: 'var(--bg-secondary)' }} />
@@ -50,6 +60,7 @@ export default function GitHubStats() {
         </div>
       </div>
     );
+  }
 
   return (
     <section className="mt-16">
@@ -64,6 +75,7 @@ export default function GitHubStats() {
         {/* Profile Card */}
         <div className="mt-6 glass-card" style={{ cursor: 'default' }}>
           <div className="flex items-center gap-4">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={data.avatar_url}
               alt="GitHub Avatar"
