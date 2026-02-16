@@ -1,50 +1,66 @@
 import { NextResponse } from 'next/server';
 
 export async function GET() {
-  const username = process.env.GITHUB_USERNAME;
-  const token = process.env.GITHUB_TOKEN;
-
-  if (!username) {
-    return NextResponse.json({ error: 'GITHUB_USERNAME tidak di set' }, { status: 400 });
-  }
-
   try {
-    const userRes = await fetch(`https://api.github.com/users/${username}`, {
-      headers: token ? { Authorization: `Bearer ${token}` } : {},
-      next: { revalidate: 3600 },
-    });
+    const token = process.env.GITHUB_TOKEN;
+    const username = process.env.GITHUB_USERNAME;
 
-    if (!userRes.ok) {
-      throw new Error(`GitHub user fetch failed: ${userRes.status}`);
+    if (!token || !username) {
+      return NextResponse.json(
+        { error: 'GitHub token atau username tidak dikonfigurasi' },
+        { status: 500 }
+      );
     }
 
-    const user = await userRes.json();
+    // Fetch data pengguna
+    const userRes = await fetch(`https://api.github.com/users/${username}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!userRes.ok) {
+      const errorText = await userRes.text();
+      console.error(`GitHub user API error (${userRes.status}):`, errorText);
+      return NextResponse.json(
+        { error: 'Gagal mengambil data pengguna GitHub' },
+        { status: userRes.status }
+      );
+    }
+    const userData = await userRes.json();
 
+    // Fetch repositori terbaru
     const reposRes = await fetch(
-      `https://api.github.com/users/${username}/repos?sort=updated&per_page=5`,
-      { headers: token ? { Authorization: `Bearer ${token}` } : {} }
+      `https://api.github.com/users/${username}/repos?sort=updated&per_page=6`,
+      { headers: { Authorization: `Bearer ${token}` } }
     );
+    if (!reposRes.ok) {
+      const errorText = await reposRes.text();
+      console.error(`GitHub repos API error (${reposRes.status}):`, errorText);
+      return NextResponse.json(
+        { error: 'Gagal mengambil repositori GitHub' },
+        { status: reposRes.status }
+      );
+    }
+    const reposData = await reposRes.json();
 
-    const repos = await reposRes.json();
+    const topRepos = reposData.map((repo: any) => ({
+      name: repo.name,
+      url: repo.html_url,
+      description: repo.description,
+      language: repo.language,
+      stars: repo.stargazers_count,
+    }));
 
     return NextResponse.json({
-      name: user.name || username,
-      avatar_url: user.avatar_url,
-      public_repos: user.public_repos,
-      followers: user.followers,
-      following: user.following,
-      top_repos: repos.map((repo: any) => ({
-        name: repo.name,
-        description: repo.description,
-        url: repo.html_url,
-        stars: repo.stargazers_count,
-        language: repo.language,
-      })),
+      avatar_url: userData.avatar_url,
+      name: userData.name || username,
+      public_repos: userData.public_repos,
+      followers: userData.followers,
+      following: userData.following,
+      top_repos: topRepos,
     });
   } catch (error) {
-    console.error('GitHub API error:', error);
+    console.error('GitHub API internal error:', error);
     return NextResponse.json(
-      { error: 'Gagal fetch GitHub' },
+      { error: 'Terjadi kesalahan internal server' },
       { status: 500 }
     );
   }
