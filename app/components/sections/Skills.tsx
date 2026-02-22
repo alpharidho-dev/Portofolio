@@ -9,9 +9,13 @@ const skillCategories = [
     icon: Monitor,
     color: '#6366f1',
     skills: [
-      'HTML', 'CSS (belajar)', 'JavaScript (belajar)',
-      'TypeScript (belajar)', 'React (dasar)',
-      'Next.js (dasar)', 'Tailwind CSS (dasar)',
+      { name: 'HTML', icon: '🌐' },
+      { name: 'CSS', icon: '🎨' },
+      { name: 'JavaScript', icon: '📜' },
+      { name: 'TypeScript', icon: '🔷' },
+      { name: 'React', icon: '⚛️' },
+      { name: 'Next.js', icon: '▲' },
+      { name: 'Tailwind CSS', icon: '💨' },
     ],
   },
   {
@@ -19,8 +23,9 @@ const skillCategories = [
     icon: Palette,
     color: '#8b5cf6',
     skills: [
-      'Figma', 'Responsive Design (belajar)',
-      'UI/UX dasar',
+      { name: 'Figma', icon: '🎯' },
+      { name: 'Responsive Design', icon: '📱' },
+      { name: 'UI/UX dasar', icon: '✨' },
     ],
   },
   {
@@ -28,8 +33,10 @@ const skillCategories = [
     icon: Server,
     color: '#06b6d4',
     skills: [
-      'Python (dasar)', 'Golang (dasar)',
-      'PostgreSQL (dasar)',
+      { name: 'Python', icon: '🐍' },
+      { name: 'Golang', icon: '🐹' },
+      { name: 'PostgreSQL', icon: '🐘' },
+      { name: 'Supabase', icon: '⚡' },
     ],
   },
   {
@@ -37,7 +44,10 @@ const skillCategories = [
     icon: Wrench,
     color: '#22c55e',
     skills: [
-      'Git', 'GitHub', 'VS Code', 'AntiGravity', 'Vercel',
+      { name: 'Git', icon: '📂' },
+      { name: 'GitHub', icon: '🐙' },
+      { name: 'VS Code', icon: '💻' },
+      { name: 'Vercel', icon: '🚀' },
     ],
   },
 ];
@@ -72,8 +82,17 @@ export default function Skills() {
             </div>
             <div className="flex flex-wrap gap-2">
               {category.skills.map((skill) => (
-                <span key={skill} className="skill-badge text-xs">
-                  {skill}
+                <span
+                  key={skill.name}
+                  className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg font-medium transition-all duration-200 hover:scale-105"
+                  style={{
+                    background: 'var(--bg-secondary)',
+                    border: '1px solid var(--border-color)',
+                    color: 'var(--text-primary)',
+                  }}
+                >
+                  <span className="text-base">{skill.icon}</span>
+                  {skill.name}
                 </span>
               ))}
             </div>

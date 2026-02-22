@@ -11,7 +11,7 @@ const navLinks = [
   { label: 'Tentang', href: '/about' },
   { label: 'Proyek', href: '/projects' },
   { label: 'Pengalaman', href: '/experience' },
-  { label: 'Tracker', href: '/tracker' }, // <-- ditambahkan
+  { label: 'Tracker', href: '/tracker' },
 ];
 
 export default function Navbar() {

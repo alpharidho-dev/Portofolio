@@ -6,7 +6,7 @@ const socialLinks = [
     { icon: Github, href: 'https://github.com/vidialpha-max', label: 'GitHub' },
     { icon: Linkedin, href: 'https://www.linkedin.com/in/alpha-vidi-5658b43a0/', label: 'LinkedIn' },
     { icon: Instagram, href: 'https://www.instagram.com/alpharidhooo/', label: 'Instagram' },
-    { icon: Mail, href: 'mailto:alpharidho@example.com', label: 'Email' },
+    { icon: Mail, href: 'mailto:alpharidho@gmail.com', label: 'Email' },
 ];
 
 export default function Footer() {

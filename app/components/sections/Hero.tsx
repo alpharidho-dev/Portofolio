@@ -13,6 +13,20 @@ const socialLinks = [
   { icon: Instagram, href: 'https://www.instagram.com/alpharidhooo/', label: 'Instagram' },
 ];
 
+// Floating particle positions (fixed to avoid hydration mismatch)
+const particles = [
+  { x: '10%', y: '15%', size: 4, delay: 0, duration: 6 },
+  { x: '85%', y: '20%', size: 3, delay: 1, duration: 8 },
+  { x: '75%', y: '70%', size: 5, delay: 2, duration: 7 },
+  { x: '20%', y: '80%', size: 3, delay: 0.5, duration: 9 },
+  { x: '50%', y: '10%', size: 4, delay: 1.5, duration: 6.5 },
+  { x: '90%', y: '50%', size: 3, delay: 3, duration: 8.5 },
+  { x: '5%', y: '55%', size: 5, delay: 2.5, duration: 7.5 },
+  { x: '60%', y: '85%', size: 3, delay: 0.8, duration: 6.8 },
+  { x: '35%', y: '30%', size: 4, delay: 1.2, duration: 7.2 },
+  { x: '45%', y: '60%', size: 3, delay: 2.2, duration: 8.2 },
+];
+
 export default function Hero() {
   const [roleIndex, setRoleIndex] = useState(0);
   const [displayText, setDisplayText] = useState('');
@@ -23,23 +37,19 @@ export default function Hero() {
     let timeout: NodeJS.Timeout;
 
     if (!isDeleting) {
-      // Mode mengetik
       if (displayText.length < currentRole.length) {
         timeout = setTimeout(() => {
           setDisplayText(currentRole.slice(0, displayText.length + 1));
         }, 100);
       } else {
-        // Selesai mengetik, tunggu 2 detik lalu hapus
         timeout = setTimeout(() => setIsDeleting(true), 2000);
       }
     } else {
-      // Mode menghapus
       if (displayText.length > 0) {
         timeout = setTimeout(() => {
           setDisplayText(displayText.slice(0, -1));
         }, 50);
       } else {
-        // Selesai menghapus, pindah ke role berikutnya
         setIsDeleting(false);
         setRoleIndex((prev) => (prev + 1) % roles.length);
       }
@@ -49,11 +59,50 @@ export default function Hero() {
   }, [displayText, isDeleting, roleIndex]);
 
   return (
-    <section className="min-h-[calc(100vh-10rem)] flex flex-col justify-center py-12">
+    <section className="min-h-[calc(100vh-10rem)] flex flex-col justify-center py-12 relative overflow-hidden">
+      {/* Floating Particles */}
+      {particles.map((p, i) => (
+        <motion.div
+          key={i}
+          className="absolute rounded-full pointer-events-none"
+          style={{
+            left: p.x,
+            top: p.y,
+            width: p.size,
+            height: p.size,
+            background: 'var(--accent-start)',
+            opacity: 0.15,
+          }}
+          animate={{
+            y: [0, -20, 0, 20, 0],
+            x: [0, 10, 0, -10, 0],
+            opacity: [0.1, 0.25, 0.1],
+            scale: [1, 1.3, 1],
+          }}
+          transition={{
+            duration: p.duration,
+            delay: p.delay,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+        />
+      ))}
+
+      {/* Gradient orbs */}
+      <div
+        className="absolute -top-40 -right-40 w-80 h-80 rounded-full blur-3xl pointer-events-none"
+        style={{ background: 'radial-gradient(circle, var(--accent-start), transparent)', opacity: 0.06 }}
+      />
+      <div
+        className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full blur-3xl pointer-events-none"
+        style={{ background: 'radial-gradient(circle, var(--accent-end), transparent)', opacity: 0.06 }}
+      />
+
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7 }}
+        className="relative z-10"
       >
         {/* Status Badge */}
         <motion.div

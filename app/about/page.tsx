@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Bio from '../components/sections/Bio';
 import Skills from '../components/sections/Skills';
 import SpotifyEmbed from '../components/sections/SpotifyEmbed';
+import TypingSpeedTest from '../components/sections/TypingSpeedTest';
 
 export const metadata: Metadata = {
     title: 'Tentang Saya',
@@ -22,6 +23,8 @@ export default function AboutPage() {
             </div>
 
             <Bio />
+            
+            <TypingSpeedTest />
 
             <div className="mt-12">
                 <h2 className="section-heading mb-6">Keahlian Teknis</h2>
