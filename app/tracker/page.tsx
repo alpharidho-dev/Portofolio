@@ -3,7 +3,6 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import TypingSpeedTest from '../components/sections/TypingSpeedTest';
 import { Code2, Layers, Loader2 } from 'lucide-react';
 import { TechItem } from '@/app/components/sections/Tracker';
 

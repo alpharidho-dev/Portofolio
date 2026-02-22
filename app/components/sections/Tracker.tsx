@@ -1,8 +1,7 @@
-// app/components/sections/Tracker.tsx
 export interface TechItem {
   name: string;
   level: 'Pemula' | 'Menengah' | 'Lanjutan';
-  progress: number; // 0–100
+  progress: number;
   icon?: string;
   category?: string;
 }
