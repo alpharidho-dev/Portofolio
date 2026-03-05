@@ -2,7 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Award, Filter, X, Calendar, Tag, ExternalLink } from 'lucide-react';
+import { 
+  Award, Filter, X, Calendar, ExternalLink, 
+  Trophy, Wrench, Tag, List 
+} from 'lucide-react';
 import { supabase } from '@/app/lib/supabase';
 
 interface Certificate {
@@ -16,11 +19,11 @@ interface Certificate {
     tags: string[];
 }
 
-const eventTypeLabels: Record<string, { label: string; emoji: string; color: string }> = {
-    competition: { label: 'Lomba', emoji: '🏆', color: '#f59e0b' },
-    workshop: { label: 'Workshop', emoji: '🛠️', color: '#06b6d4' },
-    course: { label: 'Kursus', emoji: '📖', color: '#8b5cf6' },
-    other: { label: 'Lainnya', emoji: '📌', color: '#22c55e' },
+const eventTypeLabels: Record<string, { label: string; icon: React.ReactNode; color: string }> = {
+    competition: { label: 'Lomba', icon: <Trophy size={16} />, color: '#f59e0b' },
+    workshop: { label: 'Workshop', icon: <Wrench size={16} />, color: '#06b6d4' },
+    course: { label: 'Kursus', icon: <Calendar size={16} />, color: '#8b5cf6' },
+    other: { label: 'Lainnya', icon: <Tag size={16} />, color: '#22c55e' },
 };
 
 export default function AchievementGallery() {
@@ -56,11 +59,11 @@ export default function AchievementGallery() {
     }, [filter]);
 
     const filterOptions = [
-        { value: 'all', label: 'Semua', emoji: '📋' },
+        { value: 'all', label: 'Semua', icon: <List size={16} /> },
         ...Object.entries(eventTypeLabels).map(([key, val]) => ({
             value: key,
             label: val.label,
-            emoji: val.emoji,
+            icon: val.icon,
         })),
     ];
 
@@ -83,7 +86,7 @@ export default function AchievementGallery() {
                             transform: filter === opt.value ? 'scale(1.05)' : 'scale(1)',
                         }}
                     >
-                        <span>{opt.emoji}</span>
+                        <span className="flex items-center">{opt.icon}</span>
                         {opt.label}
                     </button>
                 ))}
@@ -149,14 +152,14 @@ export default function AchievementGallery() {
                                     </div>
                                     {/* Type Badge */}
                                     <span
-                                        className="absolute top-2 right-2 text-[11px] font-semibold px-2 py-0.5 rounded-full backdrop-blur-sm"
+                                        className="absolute top-2 right-2 text-[11px] font-semibold px-2 py-0.5 rounded-full backdrop-blur-sm flex items-center gap-1"
                                         style={{
                                             background: `${typeInfo.color}20`,
                                             color: typeInfo.color,
                                             border: `1px solid ${typeInfo.color}30`,
                                         }}
                                     >
-                                        {typeInfo.emoji} {typeInfo.label}
+                                        {typeInfo.icon} {typeInfo.label}
                                     </span>
                                 </div>
 
@@ -247,13 +250,13 @@ export default function AchievementGallery() {
                             <div className="p-6">
                                 <div className="flex items-center gap-2 mb-2">
                                     <span
-                                        className="text-xs font-semibold px-2 py-0.5 rounded-full"
+                                        className="text-xs font-semibold px-2 py-0.5 rounded-full flex items-center gap-1"
                                         style={{
                                             background: `${(eventTypeLabels[selectedCert.event_type] || eventTypeLabels.other).color}15`,
                                             color: (eventTypeLabels[selectedCert.event_type] || eventTypeLabels.other).color,
                                         }}
                                     >
-                                        {(eventTypeLabels[selectedCert.event_type] || eventTypeLabels.other).emoji}{' '}
+                                        {(eventTypeLabels[selectedCert.event_type] || eventTypeLabels.other).icon}
                                         {(eventTypeLabels[selectedCert.event_type] || eventTypeLabels.other).label}
                                     </span>
                                 </div>

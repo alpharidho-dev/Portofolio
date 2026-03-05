@@ -25,7 +25,7 @@ export default function ExperiencePage() {
 
             {/* Certificates Section */}
             <div className="mt-16">
-                <h2 className="section-heading mb-6">🏆 Sertifikat & Pencapaian</h2>
+                <h2 className="section-heading mb-6">Sertifikat & Pencapaian</h2>
                 <p className="text-sm mb-6" style={{ color: 'var(--text-muted)' }}>
                     Bukti pencapaian dari lomba, workshop, dan kegiatan lainnya.
                 </p>

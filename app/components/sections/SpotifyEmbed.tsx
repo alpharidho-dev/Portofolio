@@ -13,7 +13,8 @@ export default function SpotifyEmbed() {
       >
         <h2 className="section-heading">🎧 Playlist favorit yang nemenin ngoding</h2>
         <p className="text-xs text-muted-foreground mb-2">
-            Pastiin udah login spotify di laptop lu kalo blm bakal muncul (preview 30 detik doang kalo ga login) </p>
+          Pastiin udah login spotify di laptop lu kalo blm, bakal muncul preview 30 detik doang
+        </p>
         <div className="mt-2 glass-card spotify-card overflow-hidden" style={{ padding: 0 }}>
           <iframe
             title="Spotify Embed"
