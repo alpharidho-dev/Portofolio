@@ -8,7 +8,7 @@ import {
 } from '@icons-pack/react-simple-icons';
 
 
-const skillCategories = [
+export const skillCategories = [
   {
     title: 'Frontend',
     icon: Monitor,
@@ -32,12 +32,12 @@ const skillCategories = [
     icon: Wrench,
     color: '#22c55e',
     skills: ['Git', 'GitHub', 'VS Code', 'Vercel', 'Antigravity'],
-  },    
+  },
 ];
 
 const getSkillIcon = (skillName: string): React.ReactNode | null => {
   const map: Record<string, React.ReactNode> = {
-    
+
     'HTML': <SiHtml5 size={16} />,
     'JavaScript': <SiJavascript size={16} />,
     'TypeScript': <SiTypescript size={16} />,
@@ -52,31 +52,31 @@ const getSkillIcon = (skillName: string): React.ReactNode | null => {
     'Vercel': <SiVercel size={16} />,
     'Figma': <SiFigma size={16} />,
   };
-    return map[skillName] || null;
+  return map[skillName] || null;
 };
 
 export default function Skills() {
   return (
     <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.5, delay: 0.2 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: 0.2 }}
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {skillCategories.map((category, i) => (
           <motion.div
-          key={category.title}
-          className="glass-card"
-          style={{ cursor: 'default' }}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 + i * 0.1, duration: 0.4 }}
+            key={category.title}
+            className="glass-card"
+            style={{ cursor: 'default' }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 + i * 0.1, duration: 0.4 }}
           >
             <div className="flex items-center gap-2.5 mb-4">
               <div
                 className="p-2 rounded-lg"
                 style={{ background: `${category.color}15` }}
-                >
+              >
                 <category.icon size={18} style={{ color: category.color }} />
               </div>
               <h3 className="font-semibold" style={{ color: 'var(--text-primary)' }}>
@@ -86,14 +86,14 @@ export default function Skills() {
             <div className="flex flex-wrap gap-2">
               {category.skills.map((skillName) => (
                 <span
-                key={skillName}
-                className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg font-medium transition-all duration-200 hover:scale-105"
-                style={{
-                  background: 'var(--bg-secondary)',
-                  border: '1px solid var(--border-color)',
-                  color: 'var(--text-primary)',
-                  
-                }}
+                  key={skillName}
+                  className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg font-medium transition-all duration-200 hover:scale-105"
+                  style={{
+                    background: 'var(--bg-secondary)',
+                    border: '1px solid var(--border-color)',
+                    color: 'var(--text-primary)',
+
+                  }}
                 >
                   <span className="text-base">{getSkillIcon(skillName)}</span>
                   {skillName}
@@ -106,4 +106,3 @@ export default function Skills() {
     </motion.div>
   );
 }
-  
